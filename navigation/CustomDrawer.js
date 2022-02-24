@@ -21,7 +21,7 @@ import { setSelectedTab } from '../stores/tab/tabAction';
 
 const Drawer = createDrawerNavigator();
 
-const CustomDrawerItem = ({ icon, label }) => {
+const CustomDrawerItem = ({ icon, label, isFocused, onPress }) => {
   return (
     <TouchableOpacity
       style={{
@@ -31,9 +31,9 @@ const CustomDrawerItem = ({ icon, label }) => {
         alignItems: 'center',
         paddingLeft: SIZES.radius,
         borderRadius: SIZES.base,
-        // backgroundColor:
+        backgroundColor: isFocused ? COLORS.transparentBlack1 : null,
       }}
-      // onPress
+      onPress={onPress}
     >
       <Image
         source={icon}
@@ -45,7 +45,7 @@ const CustomDrawerItem = ({ icon, label }) => {
     </TouchableOpacity>
   );
 };
-const CustomDrawerContent = ({ navigation }) => {
+const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
   return (
     <DrawerContentScrollView
       scrollEnabled={true}
@@ -90,18 +90,41 @@ const CustomDrawerContent = ({ navigation }) => {
         </TouchableOpacity>
         {/* Drawer Items */}
         <View style={{ flex: 1, marginTop: SIZES.padding }}>
-          <CustomDrawerItem label={constants.screens.home} icon={icons.home} />
+          <CustomDrawerItem
+            label={constants.screens.home}
+            icon={icons.home}
+            inFocused={selectedTab == constants.screens.home}
+            onPress={() => {
+              setSelectedTab(constants.screens.home);
+              navigation.navigate('MainLayout');
+            }}
+          />
           <CustomDrawerItem
             label={constants.screens.my_wallet}
             icon={icons.wallet}
+            inFocused={selectedTab == constants.screens.my_wallet}
+            onPress={() => {
+              setSelectedTab(constants.screens.my_wallet);
+              navigation.navigate('MainLayout');
+            }}
           />
           <CustomDrawerItem
             label={constants.screens.notification}
             icon={icons.notification}
+            inFocused={selectedTab == constants.screens.notification}
+            onPress={() => {
+              setSelectedTab(constants.screens.notification);
+              navigation.navigate('MainLayout');
+            }}
           />
           <CustomDrawerItem
             label={constants.screens.favourite}
             icon={icons.favourite}
+            inFocused={selectedTab == constants.screens.favourite}
+            onPress={() => {
+              setSelectedTab(constants.screens.favourite);
+              navigation.navigate('MainLayout');
+            }}
           />
           {/* Line Divider */}
           <View
